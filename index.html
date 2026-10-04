@@ -53,12 +53,6 @@
         }
         .ticker-wrap { display: flex; width: 200%; animation: ticker 25s linear infinite; }
         .ticker-wrap:hover { animation-play-state: paused; }
-
-        /* Card Flip */
-        .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
     </style>
 </head>
 <body class="bg-[#080c0e] text-slate-200 min-h-screen flex flex-col justify-between selection:bg-[#00ff66] selection:text-black">
@@ -105,7 +99,7 @@
 
     <!-- WIN DROP MODAL -->
     <div id="win-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
-        <div class="bg-[#0f171c] border-2 border-[#00ff66] rounded-2xl p-6 md:p-8 max-w-sm w-full neon-box text-center space-y-4 relative animate-bounce-short">
+        <div class="bg-[#0f171c] border-2 border-[#00ff66] rounded-2xl p-6 md:p-8 max-w-sm w-full neon-box text-center space-y-4 relative">
             <div class="text-xs font-bold font-orbitron uppercase text-[#00ff66] tracking-widest">ПОЗДРАВЛЯЕМ! ВЫ ВЫБИЛИ</div>
             <div id="win-modal-icon" class="text-5xl text-[#00ff66] py-2">
                 <i class="fa-solid fa-trophy"></i>
@@ -115,9 +109,6 @@
             <div class="flex gap-3 pt-2">
                 <button onclick="closeWinModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs font-orbitron transition">
                     Забрать
-                </button>
-                <button onclick="closeWinModalAndSpin()" class="flex-1 neon-btn text-black font-black py-2.5 rounded-xl text-xs font-orbitron uppercase transition">
-                    Еще раз
                 </button>
             </div>
         </div>
@@ -205,10 +196,10 @@
                         Standoff 2 Exclusive Drop
                     </span>
                     <h2 class="text-3xl md:text-5xl font-black font-orbitron tracking-wide text-white">
-                        ВЫБИВАЙ <span class="text-[#00ff66] neon-text">НОЖИ И OSE</span>
+                        ВЫБИВАЙ <span class="text-[#00ff66] neon-text">НОЖНИЦЫ И OSE</span>
                     </h2>
                     <p class="text-slate-400 text-sm max-w-xl">
-                        Открывай кейсы с гарантированной окупаемостью, торгуй ножами Karambit и Butterfly на внутренней бирже и получай настоящую валюту OSE!
+                        Открывай кейсы с гарантированной окупаемостью, торгуй редкими Ножницами, Karambit и Butterfly на внутренней бирже и получай настоящую валюту OSE!
                     </p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
                         <button onclick="switchPage('cards')" class="neon-btn px-6 py-2.5 rounded-xl font-orbitron font-bold text-black text-xs uppercase tracking-wider">
@@ -288,7 +279,7 @@
                 </span>
                 <h2 class="text-3xl font-black font-orbitron text-white">OVER CARDS (КОМБО-КАРТОЧКИ)</h2>
                 <p class="text-xs text-slate-400">
-                    Покупай секретные карты: внутри каждой гарантированно содержится пакет баланса OSE + топовый скин Standoff 2!
+                    Покупай секретные карты: внутри каждой гарантированно содержится пакет баланса OSE + топовый скин или Ножницы Standoff 2!
                 </p>
             </div>
 
@@ -385,6 +376,7 @@
                     <div class="flex justify-between text-slate-400 font-mono"><span>OVER2026</span> <span class="text-[#00ff66]">+1,000 OSE</span></div>
                     <div class="flex justify-between text-slate-400 font-mono"><span>STANDOFF</span> <span class="text-[#00ff66]">+2,500 OSE</span></div>
                     <div class="flex justify-between text-slate-400 font-mono"><span>KERAMBIT</span> <span class="text-[#00ff66]">Нож Karambit Gold</span></div>
+                    <div class="flex justify-between text-slate-400 font-mono"><span>SCISSORS</span> <span class="text-[#00ff66]">Ножницы Cyber Cut</span></div>
                 </div>
             </div>
         </section>
@@ -426,11 +418,12 @@
         
         const STOCKS = [
             { id: 's1', name: 'Karambit Gold', type: 'Knife', price: 4200, change: 5.4, icon: 'knife' },
-            { id: 's2', name: 'Butterfly Dragon', type: 'Knife', price: 3800, change: -2.1, icon: 'knife' },
-            { id: 's3', name: 'M9 Bayonet Frozen', type: 'Knife', price: 2900, change: 12.8, icon: 'knife' },
-            { id: 's4', name: 'AWM Treasure', type: 'Sniper', price: 1450, change: 1.2, icon: 'gun' },
-            { id: 's5', name: 'AKR Tag King', type: 'Rifle', price: 890, change: -4.5, icon: 'gun' },
-            { id: 's6', name: 'Glove Burning', type: 'Gloves', price: 3100, change: 8.9, icon: 'glove' }
+            { id: 's2', name: 'Scissors Cyber Cut', type: 'Knife', price: 3600, change: 14.2, icon: 'scissors' },
+            { id: 's3', name: 'Butterfly Dragon', type: 'Knife', price: 3800, change: -2.1, icon: 'knife' },
+            { id: 's4', name: 'M9 Bayonet Frozen', type: 'Knife', price: 2900, change: 12.8, icon: 'knife' },
+            { id: 's5', name: 'AWM Treasure', type: 'Sniper', price: 1450, change: 1.2, icon: 'gun' },
+            { id: 's6', name: 'AKR Tag King', type: 'Rifle', price: 890, change: -4.5, icon: 'gun' },
+            { id: 's7', name: 'Glove Burning', type: 'Gloves', price: 3100, change: 8.9, icon: 'glove' }
         ];
 
         const CASES = [
@@ -444,6 +437,7 @@
                     { name: '120 OSE', value: 120, rarity: 'uncommon', type: 'currency' },
                     { name: 'Glock Neon', value: 180, rarity: 'rare', type: 'gun' },
                     { name: 'AKR Nano', value: 300, rarity: 'epic', type: 'gun' },
+                    { name: 'Scissors Cyber Cut', value: 3600, rarity: 'arcana', type: 'scissors' },
                     { name: '500 OSE', value: 500, rarity: 'legendary', type: 'currency' }
                 ]
             },
@@ -457,6 +451,7 @@
                     { name: 'M4A1 Tiger', value: 450, rarity: 'rare', type: 'gun' },
                     { name: 'Glove Burning', value: 3100, rarity: 'arcana', type: 'glove' },
                     { name: 'M9 Bayonet Frozen', value: 2900, rarity: 'arcana', type: 'knife' },
+                    { name: 'Scissors Cyber Cut', value: 3600, rarity: 'arcana', type: 'scissors' },
                     { name: '1000 OSE', value: 1000, rarity: 'epic', type: 'currency' }
                 ]
             },
@@ -470,6 +465,7 @@
                     { name: '50 OSE', value: 50, rarity: 'common', type: 'currency' },
                     { name: 'Butterfly Dragon', value: 3800, rarity: 'arcana', type: 'knife' },
                     { name: 'Karambit Gold', value: 4200, rarity: 'arcana', type: 'knife' },
+                    { name: 'Scissors Cyber Cut', value: 3600, rarity: 'arcana', type: 'scissors' },
                     { name: '10000 OSE', value: 10000, rarity: 'arcana', type: 'currency' }
                 ]
             },
@@ -489,9 +485,10 @@
         ];
 
         const OVER_CARDS = [
-            { id: 'card1', name: 'Neon Starter Pack', price: 400, minOse: 200, maxOse: 600, guarantee: 'AKR Nano' },
-            { id: 'card2', name: 'Gold Knife Card', price: 2500, minOse: 1000, maxOse: 3000, guarantee: 'Karambit Gold' },
-            { id: 'card3', name: 'Cyber Dragon Pack', price: 3500, minOse: 1500, maxOse: 5000, guarantee: 'Butterfly Dragon' }
+            { id: 'card1', name: 'Neon Starter Pack', price: 400, minOse: 200, maxOse: 600, guarantee: 'AKR Nano', guaranteeVal: 300, type: 'gun' },
+            { id: 'card2', name: 'Scissors Special Pack', price: 2000, minOse: 800, maxOse: 2500, guarantee: 'Scissors Cyber Cut', guaranteeVal: 3600, type: 'scissors' },
+            { id: 'card3', name: 'Gold Knife Card', price: 2500, minOse: 1000, maxOse: 3000, guarantee: 'Karambit Gold', guaranteeVal: 4200, type: 'knife' },
+            { id: 'card4', name: 'Cyber Dragon Pack', price: 3500, minOse: 1500, maxOse: 5000, guarantee: 'Butterfly Dragon', guaranteeVal: 3800, type: 'knife' }
         ];
 
         // State Management
@@ -542,13 +539,13 @@
                     password: password,
                     balance: 1000,
                     inventory: [],
-                    usedPromos: []
+                    promos: []
                 };
                 localStorage.setItem('oc_users', JSON.stringify(users));
                 loginUser(username, users[username]);
             } else {
                 if (!users[username] || users[username].password !== password) {
-                    errorEl.innerText = "Неверный логин или пароль!";
+                    errorEl.innerText = "Неверное имя пользователя или пароль!";
                     errorEl.classList.remove('hidden');
                     return;
                 }
@@ -561,22 +558,12 @@
             localStorage.setItem('oc_current_user', username);
             document.getElementById('auth-modal').classList.add('hidden');
             document.getElementById('header-username').innerText = username;
-            updateBalanceDisplay();
+            updateBalanceUI();
+            renderCases();
+            renderCards();
+            renderMarket();
+            renderTicker();
             renderInventory();
-            renderMarketTable();
-        }
-
-        function checkSession() {
-            const savedUser = localStorage.getItem('oc_current_user');
-            const users = JSON.parse(localStorage.getItem('oc_users') || '{}');
-            if (savedUser && users[savedUser]) {
-                currentUser = { username: savedUser, ...users[savedUser] };
-                document.getElementById('auth-modal').classList.add('hidden');
-                document.getElementById('header-username').innerText = savedUser;
-                updateBalanceDisplay();
-                renderInventory();
-                renderMarketTable();
-            }
         }
 
         function saveUserData() {
@@ -586,13 +573,13 @@
                 password: currentUser.password,
                 balance: currentUser.balance,
                 inventory: currentUser.inventory,
-                usedPromos: currentUser.usedPromos || []
+                promos: currentUser.promos || []
             };
             localStorage.setItem('oc_users', JSON.stringify(users));
-            updateBalanceDisplay();
+            updateBalanceUI();
         }
 
-        function updateBalanceDisplay() {
+        function updateBalanceUI() {
             if (currentUser) {
                 document.getElementById('user-balance').innerText = currentUser.balance.toLocaleString();
             }
@@ -605,7 +592,7 @@
         }
 
         /* ==========================================================================
-           3. UI RENDERERS & ROUTING
+           3. NAVIGATION & UI RENDERERS
            ========================================================================== */
 
         function switchPage(pageId) {
@@ -614,95 +601,71 @@
                 const el = document.getElementById(`page-${p}`);
                 if (el) el.classList.add('hidden');
             });
-            const target = document.getElementById(`page-${pageId}`);
-            if (target) target.classList.remove('hidden');
 
-            if (pageId === 'flappy') {
-                initFlappyGame();
-            }
+            const activePage = document.getElementById(`page-${pageId}`);
+            if (activePage) activePage.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+            });
+
+            if (pageId === 'inventory') renderInventory();
+            if (pageId === 'market') renderMarket();
+            if (pageId === 'cards') renderCards();
         }
 
-        function renderCasesGrid() {
-            const grid = document.getElementById('cases-grid');
-            grid.innerHTML = CASES.map(c => `
-                <div class="bg-[#0b1317] border border-slate-800 hover:border-[#00ff66]/40 rounded-2xl p-5 flex flex-col justify-between transition group hover:-translate-y-1">
-                    <div class="text-center space-y-3">
-                        <div class="w-32 h-32 mx-auto relative flex items-center justify-center">
-                            <div class="absolute inset-0 bg-[${c.color}]/10 rounded-full blur-xl group-hover:scale-125 transition"></div>
-                            <i class="fa-solid fa-box text-6xl text-[${c.color}] drop-shadow-[0_0_15px_rgba(0,255,102,0.3)]"></i>
-                        </div>
-                        <h4 class="font-orbitron font-bold text-white text-lg">${c.name}</h4>
-                        <div class="text-xs text-slate-400 font-mono">Содержит до 10,000 OSE и Ножи</div>
-                    </div>
-                    <div class="mt-6">
-                        <button onclick="setupCaseOpener('${c.id}')" class="w-full neon-btn font-orbitron font-black text-black py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2">
-                            <span>${c.price} OSE</span>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderOverCards() {
-            const grid = document.getElementById('cards-grid');
-            grid.innerHTML = OVER_CARDS.map(card => `
-                <div class="perspective-1000 h-96 group">
-                    <div class="relative w-full h-full rounded-2xl transition-all duration-700 transform-style-3d group-hover:rotate-y-180 cursor-pointer">
-                        <!-- FRONT CARD -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-[#0f171c] to-[#080c0e] border-2 border-[#00ff66]/40 rounded-2xl p-6 flex flex-col justify-between items-center backface-hidden neon-box">
-                            <div class="text-center">
-                                <span class="text-[10px] uppercase font-bold text-[#00ff66] tracking-widest font-orbitron">OVER CARD</span>
-                                <h3 class="text-xl font-black font-orbitron text-white mt-1">${card.name}</h3>
-                            </div>
-                            <div class="w-28 h-28 rounded-2xl bg-[#00ff66]/10 border border-[#00ff66]/30 flex items-center justify-center text-[#00ff66] text-4xl shadow-[0_0_20px_rgba(0,255,102,0.2)]">
-                                <i class="fa-solid fa-id-card"></i>
-                            </div>
-                            <div class="text-center space-y-1">
-                                <div class="text-xs text-slate-400">Наведи для просмотра содержимого</div>
-                                <div class="text-lg font-black font-orbitron text-[#00ff66]">${card.price} OSE</div>
-                            </div>
-                        </div>
-
-                        <!-- BACK CARD -->
-                        <div class="absolute inset-0 bg-[#0b1317] border-2 border-[#00ff66] rounded-2xl p-6 flex flex-col justify-between items-center rotate-y-180 backface-hidden">
-                            <div class="text-center space-y-2">
-                                <h4 class="font-orbitron font-bold text-white text-sm">Гарантированный Дроп</h4>
-                                <div class="bg-[#080c0e] p-3 rounded-xl border border-slate-800 text-xs text-slate-300">
-                                    <div class="text-[#00ff66] font-bold">+${card.minOse} - ${card.maxOse} OSE</div>
-                                    <div class="text-amber-400 font-bold mt-1">+ ${card.guarantee}</div>
-                                </div>
-                            </div>
-                            <button onclick="buyOverCard('${card.id}')" class="w-full neon-btn font-orbitron font-black text-black py-3 rounded-xl text-xs uppercase tracking-wider">
-                                Купить за ${card.price} OSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+        function getIconHTML(type) {
+            if (type === 'scissors') return `<i class="fa-solid fa-scissors"></i>`;
+            if (type === 'knife') return `<i class="fa-solid fa-gem"></i>`;
+            if (type === 'glove') return `<i class="fa-solid fa-hand"></i>`;
+            if (type === 'gun') return `<i class="fa-solid fa-crosshair"></i>`;
+            return `<i class="fa-solid fa-coins"></i>`;
         }
 
         /* ==========================================================================
-           4. CASE OPENER & ROULETTE
+           4. CASES & ROULETTE LOGIC
            ========================================================================== */
 
-        function setupCaseOpener(caseId) {
+        function renderCases() {
+            const grid = document.getElementById('cases-grid');
+            grid.innerHTML = CASES.map(c => `
+                <div onclick="openCaseView('${c.id}')" class="bg-[#0b1317] border border-slate-800 hover:border-[#00ff66]/50 rounded-2xl p-5 cursor-pointer transition-all hover:-translate-y-1 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-bold font-orbitron uppercase text-[#00ff66] bg-[#00ff66]/10 px-2.5 py-1 rounded-md">Кейс</span>
+                            <span class="text-xs font-black font-orbitron text-white">${c.price} OSE</span>
+                        </div>
+                        <div class="py-6 flex justify-center">
+                            <div class="w-24 h-24 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center text-4xl text-[#00ff66] group-hover:scale-110 transition shadow-inner">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-black font-orbitron text-center text-white text-base group-hover:text-[#00ff66] transition">${c.name}</h4>
+                    </div>
+                    <button class="w-full mt-4 bg-slate-800 group-hover:bg-[#00ff66] group-hover:text-black font-orbitron font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+                        Открыть
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openCaseView(caseId) {
             activeOpenerCase = CASES.find(c => c.id === caseId);
             if (!activeOpenerCase) return;
 
             document.getElementById('opener-case-title').innerText = activeOpenerCase.name;
             document.getElementById('opener-case-price').innerText = activeOpenerCase.price;
 
-            // Render Droplist
-            const droplistEl = document.getElementById('opener-droplist');
-            droplistEl.innerHTML = activeOpenerCase.items.map(i => `
-                <div class="bg-[#080c0e] border border-slate-800 rounded-xl px-3 py-2 text-center text-xs font-semibold">
-                    <div class="text-white">${i.name}</div>
-                    <div class="text-[10px] text-[#00ff66] font-mono">${i.value} OSE</div>
+            const droplist = document.getElementById('opener-droplist');
+            droplist.innerHTML = activeOpenerCase.items.map(item => `
+                <div class="bg-[#080c0e] border border-slate-800 rounded-xl p-2.5 text-center w-28 flex flex-col items-center">
+                    <div class="text-xl text-[#00ff66] mb-1">${getIconHTML(item.type)}</div>
+                    <div class="text-[11px] font-bold text-white truncate w-full">${item.name}</div>
+                    <div class="text-[9px] text-slate-400 font-mono">${item.value} OSE</div>
                 </div>
             `).join('');
 
             resetRoulette();
-            fillRouletteTrack();
             switchPage('opener');
         }
 
@@ -710,36 +673,27 @@
             const track = document.getElementById('roulette-track');
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
+            
+            if (activeOpenerCase) {
+                let itemsHTML = '';
+                for (let i = 0; i < 30; i++) {
+                    const randItem = activeOpenerCase.items[Math.floor(Math.random() * activeOpenerCase.items.length)];
+                    itemsHTML += `
+                        <div class="w-32 h-32 bg-[#080c0e] border border-slate-800 rounded-xl flex-shrink-0 flex flex-col items-center justify-center p-2 text-center">
+                            <div class="text-3xl text-[#00ff66] mb-2">${getIconHTML(randItem.type)}</div>
+                            <div class="text-xs font-bold text-white truncate w-full">${randItem.name}</div>
+                        </div>
+                    `;
+                }
+                track.innerHTML = itemsHTML;
+            }
             isSpinning = false;
         }
 
-        function fillRouletteTrack() {
-            const track = document.getElementById('roulette-track');
-            let html = '';
-            for (let i = 0; i < 40; i++) {
-                const randomItem = activeOpenerCase.items[Math.floor(Math.random() * activeOpenerCase.items.length)];
-                html += `
-                    <div class="w-32 h-32 flex-shrink-0 bg-[#080c0e] border border-slate-800 rounded-xl p-3 flex flex-col items-center justify-center text-center">
-                        <i class="fa-solid ${getItemIcon(randomItem.type)} text-2xl text-[#00ff66] mb-2"></i>
-                        <div class="text-xs font-bold text-white truncate w-full">${randomItem.name}</div>
-                        <div class="text-[10px] text-slate-400 font-mono">${randomItem.value} OSE</div>
-                    </div>
-                `;
-            }
-            track.innerHTML = html;
-        }
-
-        function getItemIcon(type) {
-            if (type === 'knife') return 'fa-shield-halved';
-            if (type === 'gun') return 'fa-crosshairs';
-            if (type === 'glove') return 'fa-hand';
-            return 'fa-coins';
-        }
-
         function spinRoulette() {
-            if (isSpinning || !currentUser) return;
+            if (isSpinning || !currentUser || !activeOpenerCase) return;
             if (currentUser.balance < activeOpenerCase.price) {
-                alert("Недостаточно OSE на балансе!");
+                alert("Недостаточно средств OSE!");
                 return;
             }
 
@@ -749,23 +703,22 @@
 
             const winItem = activeOpenerCase.items[Math.floor(Math.random() * activeOpenerCase.items.length)];
             const track = document.getElementById('roulette-track');
-
-            const items = track.children;
-            items[32].innerHTML = `
-                <i class="fa-solid ${getItemIcon(winItem.type)} text-2xl text-[#00ff66] mb-2"></i>
-                <div class="text-xs font-bold text-white truncate w-full">${winItem.name}</div>
-                <div class="text-[10px] text-slate-400 font-mono">${winItem.value} OSE</div>
+            
+            const winCardHTML = `
+                <div class="w-32 h-32 bg-[#080c0e] border-2 border-[#00ff66] rounded-xl flex-shrink-0 flex flex-col items-center justify-center p-2 text-center neon-box">
+                    <div class="text-3xl text-[#00ff66] mb-2">${getIconHTML(winItem.type)}</div>
+                    <div class="text-xs font-bold text-white truncate w-full">${winItem.name}</div>
+                </div>
             `;
+            
+            let items = track.children;
+            items[22].outerHTML = winCardHTML;
 
-            const itemWidth = 128 + 12;
-            const randomOffset = Math.floor(Math.random() * 60) - 30;
-            const targetX = -(32 * itemWidth - 150 + randomOffset);
-
+            const offset = (22 * 140) - 120; // 128px width + 12px gap
             track.style.transition = 'transform 5s cubic-bezier(0.1, 0.9, 0.1, 1.0)';
-            track.style.transform = `translateX(${targetX}px)`;
+            track.style.transform = `translateX(-${offset}px)`;
 
             setTimeout(() => {
-                isSpinning = false;
                 if (winItem.type === 'currency') {
                     currentUser.balance += winItem.value;
                 } else {
@@ -773,113 +726,122 @@
                 }
                 saveUserData();
                 showWinModal(winItem);
+                isSpinning = false;
             }, 5200);
         }
 
-        function showWinModal(item) {
-            document.getElementById('win-modal-name').innerText = item.name;
-            document.getElementById('win-modal-icon').innerHTML = `<i class="fa-solid ${getItemIcon(item.type)}"></i>`;
-            document.getElementById('win-modal').classList.remove('hidden');
+        /* ==========================================================================
+           5. OVER CARDS (КОМБО-КАРТОЧКИ)
+           ========================================================================== */
+
+        function renderCards() {
+            const grid = document.getElementById('cards-grid');
+            grid.innerHTML = OVER_CARDS.map(card => `
+                <div class="bg-[#0b1317] border border-[#00ff66]/30 rounded-2xl p-6 flex flex-col justify-between neon-box relative overflow-hidden group">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30 text-[10px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider">Over Card</span>
+                            <span class="text-sm font-black font-orbitron text-white">${card.price} OSE</span>
+                        </div>
+                        <div class="text-center py-4">
+                            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-emerald-950 to-slate-900 border border-[#00ff66]/40 flex items-center justify-center text-4xl text-[#00ff66] group-hover:scale-105 transition">
+                                ${getIconHTML(card.type)}
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-black font-orbitron text-center text-white">${card.name}</h3>
+                        <div class="bg-[#080c0e] rounded-xl p-3 border border-slate-800 space-y-1.5 text-xs">
+                            <div class="flex justify-between text-slate-400">
+                                <span>Награда OSE:</span>
+                                <span class="text-[#00ff66] font-bold font-mono">${card.minOse} - ${card.maxOse} OSE</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Гарантия:</span>
+                                <span class="text-white font-bold">${card.guarantee}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="openOverCard('${card.id}')" class="w-full mt-6 neon-btn font-orbitron font-black text-black py-3 rounded-xl text-xs uppercase tracking-wider">
+                        Открыть Карту
+                    </button>
+                </div>
+            `).join('');
         }
 
-        function closeWinModal() {
-            document.getElementById('win-modal').classList.add('hidden');
-            resetRoulette();
-            fillRouletteTrack();
-        }
-
-        function closeWinModalAndSpin() {
-            closeWinModal();
-            spinRoulette();
-        }
-
-        function buyOverCard(cardId) {
+        function openOverCard(cardId) {
             const card = OVER_CARDS.find(c => c.id === cardId);
             if (!card || !currentUser) return;
 
             if (currentUser.balance < card.price) {
-                alert("Недостаточно средств OSE!");
+                alert("Недостаточно баланса OSE!");
                 return;
             }
 
             currentUser.balance -= card.price;
-            const wonOse = Math.floor(Math.random() * (card.maxOse - card.minOse + 1)) + card.minOse;
-            currentUser.balance += wonOse;
 
-            currentUser.inventory.push({
+            // Generate Reward OSE + Guaranteed Item
+            const winOse = Math.floor(Math.random() * (card.maxOse - card.minOse + 1)) + card.minOse;
+            currentUser.balance += winOse;
+
+            const winItem = {
                 name: card.guarantee,
-                value: Math.floor(card.price * 0.8),
-                type: 'knife',
+                value: card.guaranteeVal,
+                type: card.type,
+                rarity: 'arcana',
                 id: Date.now()
-            });
-
+            };
+            currentUser.inventory.push(winItem);
             saveUserData();
-            renderInventory();
-            alert(`Карточка открыта!\n+${wonOse} OSE зачислено на баланс!\nПредмет [${card.guarantee}] добавлен в инвентарь.`);
+
+            showWinModal({
+                name: `${winOse} OSE + ${card.guarantee}`,
+                type: card.type
+            });
         }
 
         /* ==========================================================================
-           5. STOCK MARKET ENGINE (BUY & SELL)
+           6. STOCK MARKET & TICKER
            ========================================================================== */
 
-        function renderStockTicker() {
-            const ticker = document.getElementById('stock-ticker');
-            const itemsHtml = STOCKS.map(s => `
-                <div class="flex items-center gap-2 px-6">
-                    <span class="font-bold text-slate-300 font-orbitron">${s.name}:</span>
-                    <span class="font-mono text-white">${s.price} OSE</span>
-                    <span class="font-mono font-bold ${s.change >= 0 ? 'text-[#00ff66]' : 'text-red-400'}">
-                        ${s.change >= 0 ? '+' : ''}${s.change}%
-                    </span>
+        function renderTicker() {
+            const wrap = document.getElementById('stock-ticker');
+            const items = STOCKS.concat(STOCKS);
+            wrap.innerHTML = items.map(s => `
+                <div class="flex items-center gap-2 px-6 font-mono border-r border-slate-800/80">
+                    <span class="text-slate-400">${s.name}:</span>
+                    <span class="text-white font-bold">${s.price} OSE</span>
+                    <span class="${s.change >= 0 ? 'text-[#00ff66]' : 'text-red-400'}">${s.change >= 0 ? '+' : ''}${s.change}%</span>
                 </div>
             `).join('');
-            ticker.innerHTML = itemsHtml + itemsHtml;
         }
 
-        function renderMarketTable() {
-            const tbody = document.getElementById('market-table-body');
-            tbody.innerHTML = STOCKS.map(s => {
-                const ownedCount = currentUser ? currentUser.inventory.filter(i => i.name === s.name).length : 0;
-
-                return `
-                    <tr class="hover:bg-slate-800/30 transition">
-                        <td class="p-4 flex items-center gap-3">
-                            <i class="fa-solid ${getItemIcon(s.icon)} text-[#00ff66] text-lg"></i>
-                            <div>
-                                <div class="text-white font-bold">${s.name}</div>
-                                <div class="text-[10px] text-slate-400 font-mono">${s.type} (В наличии: <span class="text-[#00ff66] font-bold">${ownedCount}</span>)</div>
-                            </div>
-                        </td>
-                        <td class="p-4 font-mono font-bold text-white">${s.price} OSE</td>
-                        <td class="p-4 font-mono font-bold ${s.change >= 0 ? 'text-[#00ff66]' : 'text-red-400'}">
-                            ${s.change >= 0 ? '+' : ''}${s.change}%
-                        </td>
-                        <td class="p-4">
-                            <span class="text-[10px] px-2 py-1 rounded-md bg-[#00ff66]/10 border border-[#00ff66]/30 text-[#00ff66] font-bold">
-                                LIVE
-                            </span>
-                        </td>
-                        <td class="p-4 text-right flex justify-end gap-2">
-                            <button onclick="buyStock('${s.id}')" class="neon-btn text-black px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron">
-                                Купить
-                            </button>
-                            ${ownedCount > 0 ? `
-                                <button onclick="sellStock('${s.id}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/40 px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron transition">
-                                    Продать
-                                </button>
-                            ` : ''}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+        function renderMarket() {
+            const body = document.getElementById('market-table-body');
+            body.innerHTML = STOCKS.map(s => `
+                <tr class="hover:bg-slate-800/30 transition">
+                    <td class="p-4 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-[#00ff66] text-sm">
+                            ${getIconHTML(s.icon)}
+                        </div>
+                        <span class="text-white font-orbitron font-bold">${s.name}</span>
+                    </td>
+                    <td class="p-4 font-mono font-bold text-[#00ff66]">${s.price} OSE</td>
+                    <td class="p-4 font-mono ${s.change >= 0 ? 'text-[#00ff66]' : 'text-red-400'}">${s.change >= 0 ? '+' : ''}${s.change}%</td>
+                    <td class="p-4"><span class="text-[10px] bg-emerald-500/10 text-[#00ff66] border border-[#00ff66]/30 px-2 py-0.5 rounded font-bold uppercase">Активен</span></td>
+                    <td class="p-4 text-right">
+                        <button onclick="buyStockItem('${s.id}')" class="bg-slate-800 hover:bg-[#00ff66] hover:text-black text-white font-orbitron font-bold px-3 py-1.5 rounded-lg text-xs transition">
+                            Купить
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        function buyStock(stockId) {
+        function buyStockItem(stockId) {
             const stock = STOCKS.find(s => s.id === stockId);
             if (!stock || !currentUser) return;
 
             if (currentUser.balance < stock.price) {
-                alert("Недостаточно OSE для покупки этого актива!");
+                alert("Недостаточно OSE на балансе!");
                 return;
             }
 
@@ -888,219 +850,44 @@
                 name: stock.name,
                 value: stock.price,
                 type: stock.icon,
-                stockId: stock.id,
+                rarity: 'arcana',
                 id: Date.now()
             });
-
             saveUserData();
-            renderInventory();
-            renderMarketTable();
-            alert(`Вы купили акцию ${stock.name} за ${stock.price} OSE!`);
+            alert(`Вы успешно купили ${stock.name}!`);
         }
 
-        function sellStock(stockId) {
-            if (!currentUser) return;
-            const stock = STOCKS.find(s => s.id === stockId);
-            if (!stock) return;
-
-            const itemIndex = currentUser.inventory.findIndex(i => i.name === stock.name);
-            if (itemIndex === -1) {
-                alert("У вас нет этого предмета в наличии!");
-                return;
-            }
-
-            currentUser.balance += stock.price;
-            currentUser.inventory.splice(itemIndex, 1);
-
-            saveUserData();
-            renderInventory();
-            renderMarketTable();
-            alert(`Вы продали акцию ${stock.name} по текущему курсу за ${stock.price} OSE!`);
-        }
-
-        function updateStockPrices() {
+        setInterval(() => {
             STOCKS.forEach(s => {
-                const delta = (Math.random() * 6 - 3).toFixed(1);
-                s.change = parseFloat(delta);
-                s.price = Math.max(100, Math.floor(s.price * (1 + s.change / 100)));
+                const delta = (Math.random() * 4 - 2).toFixed(1);
+                s.change = parseFloat((parseFloat(s.change) + parseFloat(delta)).toFixed(1));
+                s.price = Math.max(100, Math.floor(s.price * (1 + delta / 100)));
             });
-            renderStockTicker();
-            renderMarketTable();
-        }
+            renderTicker();
+            if (!document.getElementById('page-market').classList.contains('hidden')) {
+                renderMarket();
+            }
+        }, 3000);
 
         /* ==========================================================================
-           6. FLAPPY OVER MINI-GAME
+           7. INVENTORY & PROMOCODES
            ========================================================================== */
-
-        let canvas, ctx;
-        let bird = { x: 50, y: 150, radius: 12, velocity: 0, gravity: 0.25, jump: -5.5 };
-        let pipes = [];
-        let score = 0;
-        let flappyOseEarned = 0;
-        let isFlappyRunning = false;
-        let animFrameId;
-
-        function initFlappyGame() {
-            canvas = document.getElementById('flappy-canvas');
-            ctx = canvas.getContext('2d');
-            document.getElementById('flappy-start-overlay').classList.remove('hidden');
-        }
-
-        function startFlappyGame() {
-            document.getElementById('flappy-start-overlay').classList.add('hidden');
-            bird.y = 150;
-            bird.velocity = 0;
-            pipes = [];
-            score = 0;
-            flappyOseEarned = 0;
-            isFlappyRunning = true;
-
-            document.getElementById('flappy-score').innerText = '0';
-            document.getElementById('flappy-earned').innerText = '0 OSE';
-
-            window.removeEventListener('keydown', handleFlappyInput);
-            window.addEventListener('keydown', handleFlappyInput);
-            canvas.onclick = () => { if (isFlappyRunning) bird.velocity = bird.jump; };
-
-            gameLoop();
-        }
-
-        function handleFlappyInput(e) {
-            if (e.code === 'Space' && isFlappyRunning) {
-                bird.velocity = bird.jump;
-            }
-        }
-
-        function gameLoop() {
-            if (!isFlappyRunning) return;
-
-            bird.velocity += bird.gravity;
-            bird.y += bird.velocity;
-
-            if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 180) {
-                const pipeGap = 120;
-                const minHeight = 50;
-                const maxHeight = canvas.height - pipeGap - minHeight;
-                const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-
-                pipes.push({
-                    x: canvas.width,
-                    top: topHeight,
-                    bottom: canvas.height - topHeight - pipeGap,
-                    passed: false
-                });
-            }
-
-            pipes.forEach(p => p.x -= 2);
-
-            pipes.forEach(p => {
-                if (!p.passed && p.x + 40 < bird.x) {
-                    p.passed = true;
-                    score++;
-                    flappyOseEarned += 25;
-                    document.getElementById('flappy-score').innerText = score;
-                    document.getElementById('flappy-earned').innerText = `${flappyOseEarned} OSE`;
-
-                    if (currentUser) {
-                        currentUser.balance += 25;
-                        saveUserData();
-                    }
-                }
-            });
-
-            if (bird.y + bird.radius > canvas.height || bird.y - bird.radius < 0) {
-                gameOverFlappy();
-                return;
-            }
-
-            for (let p of pipes) {
-                if (
-                    bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + 40 &&
-                    (bird.y - bird.radius < p.top || bird.y + bird.radius > canvas.height - p.bottom)
-                ) {
-                    gameOverFlappy();
-                    return;
-                }
-            }
-
-            ctx.fillStyle = '#05080a';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00ff66';
-            pipes.forEach(p => {
-                ctx.fillRect(p.x, 0, 40, p.top);
-                ctx.fillRect(p.x, canvas.height - p.bottom, 40, p.bottom);
-            });
-
-            ctx.beginPath();
-            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#00ff66';
-            ctx.fill();
-
-            animFrameId = requestAnimationFrame(gameLoop);
-        }
-
-        function gameOverFlappy() {
-            isFlappyRunning = false;
-            cancelAnimationFrame(animFrameId);
-            document.getElementById('flappy-start-overlay').classList.remove('hidden');
-            alert(`Игра окончена! Вы заработали ${flappyOseEarned} OSE!`);
-        }
-
-        /* ==========================================================================
-           7. PROMO CODES & INVENTORY
-           ========================================================================== */
-
-        function applyPromoCode() {
-            if (!currentUser) return;
-            const code = document.getElementById('promo-input').value.trim().toUpperCase();
-            
-            if (!currentUser.usedPromos) currentUser.usedPromos = [];
-
-            if (currentUser.usedPromos.includes(code)) {
-                alert("Вы уже активировали этот промокод!");
-                return;
-            }
-
-            if (code === 'OVER2026') {
-                currentUser.balance += 1000;
-                currentUser.usedPromos.push(code);
-                saveUserData();
-                alert("Промокод активирован! +1,000 OSE");
-            } else if (code === 'STANDOFF') {
-                currentUser.balance += 2500;
-                currentUser.usedPromos.push(code);
-                saveUserData();
-                alert("Промокод активирован! +2,500 OSE");
-            } else if (code === 'KERAMBIT') {
-                currentUser.inventory.push({ name: 'Karambit Gold', value: 4200, type: 'knife', id: Date.now() });
-                currentUser.usedPromos.push(code);
-                saveUserData();
-                renderInventory();
-                renderMarketTable();
-                alert("Промокод активирован! Вы получили нож Karambit Gold!");
-            } else {
-                alert("Неверный промокод!");
-            }
-
-            document.getElementById('promo-input').value = '';
-        }
 
         function renderInventory() {
             const grid = document.getElementById('inventory-grid');
-            if (!currentUser || !currentUser.inventory.length) {
-                grid.innerHTML = `<div class="col-span-full text-center text-slate-500 text-xs py-10 font-orbitron">Ваш инвентарь пуст</div>`;
+            if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 font-bold">Инвентарь пуст. Открывайте кейсы или карточки!</div>`;
                 return;
             }
 
             grid.innerHTML = currentUser.inventory.map(item => `
-                <div class="bg-[#0b1317] border border-slate-800 rounded-xl p-3 text-center space-y-2 flex flex-col justify-between">
+                <div class="bg-[#0b1317] border border-slate-800 rounded-xl p-3 text-center flex flex-col justify-between relative group">
                     <div>
-                        <i class="fa-solid ${getItemIcon(item.type)} text-3xl text-[#00ff66] my-2"></i>
-                        <div class="text-xs font-bold text-white truncate">${item.name}</div>
-                        <div class="text-[10px] text-slate-400 font-mono">${item.value} OSE</div>
+                        <div class="text-3xl text-[#00ff66] my-3">${getIconHTML(item.type)}</div>
+                        <div class="text-xs font-bold text-white font-orbitron truncate">${item.name}</div>
+                        <div class="text-[10px] text-[#00ff66] font-mono mt-1 font-bold">${item.value} OSE</div>
                     </div>
-                    <button onclick="sellInventoryItem(${item.id})" class="w-full bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 py-1.5 rounded-lg font-bold transition">
+                    <button onclick="sellInventoryItem(${item.id})" class="mt-3 w-full bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 py-1.5 rounded-lg text-[10px] font-bold font-orbitron uppercase transition">
                         Продать
                     </button>
                 </div>
@@ -1109,40 +896,194 @@
 
         function sellInventoryItem(itemId) {
             if (!currentUser) return;
-            const itemIdx = currentUser.inventory.findIndex(i => i.id === itemId);
-            if (itemIdx > -1) {
-                const item = currentUser.inventory[itemIdx];
+            const index = currentUser.inventory.findIndex(i => i.id === itemId);
+            if (index > -1) {
+                const item = currentUser.inventory[index];
                 currentUser.balance += item.value;
-                currentUser.inventory.splice(itemIdx, 1);
+                currentUser.inventory.splice(index, 1);
                 saveUserData();
                 renderInventory();
-                renderMarketTable();
             }
         }
 
         function sellAllInventory() {
-            if (!currentUser || !currentUser.inventory.length) return;
-            const total = currentUser.inventory.reduce((sum, item) => sum + item.value, 0);
+            if (!currentUser || currentUser.inventory.length === 0) return;
+            let total = 0;
+            currentUser.inventory.forEach(i => total += i.value);
             currentUser.balance += total;
             currentUser.inventory = [];
             saveUserData();
             renderInventory();
-            renderMarketTable();
-            alert(`Все предметы проданы на сумму ${total} OSE!`);
+            alert(`Все предметы проданы за ${total} OSE!`);
+        }
+
+        function applyPromoCode() {
+            const input = document.getElementById('promo-input');
+            const code = input.value.trim().toUpperCase();
+            if (!code || !currentUser) return;
+
+            currentUser.promos = currentUser.promos || [];
+            if (currentUser.promos.includes(code)) {
+                alert("Вы уже активировали этот промокод!");
+                return;
+            }
+
+            let success = false;
+
+            if (code === 'OVER2026') {
+                currentUser.balance += 1000;
+                success = true;
+            } else if (code === 'STANDOFF') {
+                currentUser.balance += 2500;
+                success = true;
+            } else if (code === 'KERAMBIT') {
+                currentUser.inventory.push({ name: 'Karambit Gold', value: 4200, type: 'knife', rarity: 'arcana', id: Date.now() });
+                success = true;
+            } else if (code === 'SCISSORS' || code === 'CUTTER') {
+                currentUser.inventory.push({ name: 'Scissors Cyber Cut', value: 3600, type: 'scissors', rarity: 'arcana', id: Date.now() });
+                success = true;
+            }
+
+            if (success) {
+                currentUser.promos.push(code);
+                saveUserData();
+                input.value = '';
+                alert("Промокод успешно активирован!");
+            } else {
+                alert("Неверный промокод!");
+            }
         }
 
         /* ==========================================================================
-           8. INITIALIZATION
+           8. FLAPPY OVER GAME
            ========================================================================== */
 
-        window.onload = () => {
-            checkSession();
-            renderCasesGrid();
-            renderOverCards();
-            renderStockTicker();
-            renderMarketTable();
+        let flappyCanvas, flappyCtx;
+        let bird, pipes, flappyScore, flappyEarned, flappyLoop;
+        let isFlappyRunning = false;
 
-            setInterval(updateStockPrices, 3000);
+        function initFlappy() {
+            flappyCanvas = document.getElementById('flappy-canvas');
+            flappyCtx = flappyCanvas.getContext('2d');
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && isFlappyRunning) {
+                    bird.velocity = -6;
+                }
+            });
+            flappyCanvas.addEventListener('click', () => {
+                if (isFlappyRunning) bird.velocity = -6;
+            });
+        }
+
+        function startFlappyGame() {
+            document.getElementById('flappy-start-overlay').classList.add('hidden');
+            bird = { x: 50, y: 200, radius: 12, velocity: 0, gravity: 0.35 };
+            pipes = [];
+            flappyScore = 0;
+            flappyEarned = 0;
+            document.getElementById('flappy-score').innerText = '0';
+            document.getElementById('flappy-earned').innerText = '0 OSE';
+            isFlappyRunning = true;
+
+            if (flappyLoop) clearInterval(flappyLoop);
+            flappyLoop = setInterval(updateFlappy, 1000 / 60);
+        }
+
+        function updateFlappy() {
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            if (pipes.length === 0 || pipes[pipes.length - 1].x < 200) {
+                const gap = 120;
+                const topHeight = Math.floor(Math.random() * (flappyCanvas.height - gap - 100)) + 40;
+                pipes.push({ x: flappyCanvas.width, top: topHeight, bottom: topHeight + gap, passed: false });
+            }
+
+            pipes.forEach(p => {
+                p.x -= 2;
+                if (!p.passed && p.x < bird.x) {
+                    p.passed = true;
+                    flappyScore++;
+                    flappyEarned += 25;
+                    currentUser.balance += 25;
+                    saveUserData();
+                    document.getElementById('flappy-score').innerText = flappyScore;
+                    document.getElementById('flappy-earned').innerText = `${flappyEarned} OSE`;
+                }
+            });
+
+            pipes = pipes.filter(p => p.x > -50);
+
+            // Collisions
+            if (bird.y + bird.radius >= flappyCanvas.height || bird.y - bird.radius <= 0) {
+                gameOverFlappy();
+            }
+
+            pipes.forEach(p => {
+                if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + 40) {
+                    if (bird.y - bird.radius < p.top || bird.y + bird.radius > p.bottom) {
+                        gameOverFlappy();
+                    }
+                }
+            });
+
+            // Draw
+            flappyCtx.fillStyle = '#05080a';
+            flappyCtx.fillRect(0, 0, flappyCanvas.width, flappyCanvas.height);
+
+            // Draw Bird
+            flappyCtx.beginPath();
+            flappyCtx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            flappyCtx.fillStyle = '#00ff66';
+            flappyCtx.fill();
+            flappyCtx.shadowBlur = 10;
+            flappyCtx.shadowColor = '#00ff66';
+
+            // Draw Pipes
+            pipes.forEach(p => {
+                flappyCtx.fillStyle = '#0f171c';
+                flappyCtx.strokeStyle = '#00ff66';
+                flappyCtx.lineWidth = 2;
+
+                flappyCtx.fillRect(p.x, 0, 40, p.top);
+                flappyCtx.strokeRect(p.x, 0, 40, p.top);
+
+                flappyCtx.fillRect(p.x, p.bottom, 40, flappyCanvas.height - p.bottom);
+                flappyCtx.strokeRect(p.x, p.bottom, 40, flappyCanvas.height - p.bottom);
+            });
+        }
+
+        function gameOverFlappy() {
+            clearInterval(flappyLoop);
+            isFlappyRunning = false;
+            document.getElementById('flappy-start-overlay').classList.remove('hidden');
+        }
+
+        /* ==========================================================================
+           9. MODALS & INIT
+           ========================================================================== */
+
+        function showWinModal(item) {
+            document.getElementById('win-modal-name').innerText = item.name;
+            document.getElementById('win-modal-icon').innerHTML = getIconHTML(item.type);
+            document.getElementById('win-modal').classList.remove('hidden');
+        }
+
+        function closeWinModal() {
+            document.getElementById('win-modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            initFlappy();
+            const savedUser = localStorage.getItem('oc_current_user');
+            const users = JSON.parse(localStorage.getItem('oc_users') || '{}');
+            
+            if (savedUser && users[savedUser]) {
+                loginUser(savedUser, users[savedUser]);
+            } else {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
         };
     </script>
 </body>

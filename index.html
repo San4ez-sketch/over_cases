@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title>Over Case — Standoff 2 Web Simulator</title>
+    <title>Over Case — Standoff 2 Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -21,12 +21,13 @@
                     colors: {
                         brand: {
                             bg: '#080c0e',
-                            card: '#10171d',
-                            border: '#1c2833',
+                            card: '#0f171e',
+                            border: '#1b2a38',
                             neon: '#00ff66',
-                            purple: '#9d4edd',
-                            gold: '#ffd700',
-                            red: '#ff0055'
+                            purple: '#a855f7',
+                            gold: '#eab308',
+                            red: '#ef4444',
+                            blue: '#3b82f6'
                         }
                     }
                 }
@@ -41,51 +42,63 @@
             font-family: 'Rajdhani', sans-serif;
             user-select: none;
         }
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25);
-        }
-        .neon-border {
-            border-color: #00ff66;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-        }
-        .neon-text {
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.7);
-        }
+        .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 102, 0.3); }
+        .neon-text { text-shadow: 0 0 10px rgba(0, 255, 102, 0.7); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Glassmorphism */
         .glass-panel {
-            background: rgba(16, 23, 29, 0.85);
+            background: rgba(15, 23, 30, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(28, 40, 51, 0.8);
+            border: 1px solid rgba(27, 42, 56, 0.9);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-neon selection:text-black">
 
-    <!-- Top Navigation / Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-brand-border">
+    <!-- Auth Modal (Регистрация / Вход) -->
+    <div id="modal-auth" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center">
+        <div class="glass-panel border border-brand-border rounded-3xl p-8 max-w-md w-full mx-4 text-center neon-glow">
+            <i class="fa-solid fa-user-shield text-brand-neon text-5xl mb-4"></i>
+            <h2 class="text-2xl font-orbitron font-black text-white mb-2">ВХОД В OVER CASE</h2>
+            <p class="text-xs text-gray-400 mb-6 font-orbitron">Введите никнейм для создания игрового профиля</p>
+            
+            <input type="text" id="auth-username" placeholder="Ваш ник в Standoff 2..." class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 font-orbitron text-white mb-4 focus:outline-none focus:border-brand-neon">
+            
+            <button id="btn-login" class="w-full py-3 bg-brand-neon text-black font-orbitron font-black text-sm rounded-xl hover:bg-green-400 transition neon-glow">
+                ВОЙТИ В ИГРУ
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-brand-border">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" id="logo-btn">
+            <div class="flex items-center gap-3">
                 <i class="fa-solid fa-cube text-brand-neon text-3xl animate-pulse"></i>
                 <div>
                     <h1 class="font-orbitron font-black text-2xl tracking-wider text-white leading-none">OVER <span class="text-brand-neon neon-text">CASE</span></h1>
-                    <span class="text-[10px] text-gray-400 font-orbitron tracking-widest uppercase">Standoff 2 Edition</span>
+                    <span class="text-[10px] text-gray-400 font-orbitron tracking-widest uppercase">Standoff 2 Trade Market</span>
                 </div>
             </div>
 
-            <!-- Stats Bar -->
             <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2 bg-brand-bg/80 px-4 py-2 rounded-xl border border-brand-border">
+                <!-- User Profile Info -->
+                <div class="flex items-center gap-2 bg-brand-bg/80 px-3 py-1.5 rounded-xl border border-brand-border">
+                    <i class="fa-solid fa-circle-user text-brand-neon text-lg"></i>
+                    <span id="user-display-name" class="font-orbitron font-bold text-xs text-white">Игрок</span>
+                </div>
+
+                <!-- Balance -->
+                <div class="flex items-center gap-2 bg-brand-bg/80 px-4 py-1.5 rounded-xl border border-brand-border">
                     <i class="fa-solid fa-coins text-brand-gold text-lg"></i>
                     <span id="balance" class="font-orbitron font-bold text-lg text-white">1,000</span>
                     <span class="text-xs font-semibold text-brand-neon">OSE</span>
                 </div>
 
+                <!-- Promo Button -->
                 <button id="btn-promo-open" class="glass-panel hover:border-brand-neon px-3 py-2 rounded-xl text-gray-300 hover:text-brand-neon transition flex items-center gap-2">
                     <i class="fa-solid fa-ticket text-brand-neon"></i>
-                    <span class="text-xs font-bold font-orbitron hidden sm:inline">ПРОМОКОД</span>
+                    <span class="text-xs font-bold font-orbitron hidden sm:inline">ПРОМО</span>
                 </button>
             </div>
         </div>
@@ -101,10 +114,10 @@
                 <i class="fa-solid fa-warehouse"></i> ИНВЕНТАРЬ (<span id="inv-count">0</span>)
             </button>
             <button data-tab="market" class="nav-btn px-5 py-2.5 rounded-xl font-orbitron font-bold text-sm tracking-wider transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-brand-border/30">
-                <i class="fa-solid fa-chart-line text-brand-neon"></i> БИРЖА OSE
+                <i class="fa-solid fa-chart-line text-brand-neon"></i> БИРЖА СКИНОВ
             </button>
-            <button data-tab="upgrader" class="nav-btn px-5 py-2.5 rounded-xl font-orbitron font-bold text-sm tracking-wider transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-brand-border/30">
-                <i class="fa-solid fa-bolt text-brand-purple"></i> АПГРЕЙДЕР
+            <button data-tab="contracts" class="nav-btn px-5 py-2.5 rounded-xl font-orbitron font-bold text-sm tracking-wider transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-brand-border/30">
+                <i class="fa-solid fa-file-contract text-brand-purple"></i> КОНТРАКТЫ
             </button>
         </div>
     </nav>
@@ -114,15 +127,10 @@
         
         <!-- CASES SECTION -->
         <section id="sec-cases" class="tab-content">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-orbitron font-extrabold text-white tracking-wide flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-brand-neon animate-ping"></span> КЕЙСЫ И КОЛЛЕКЦИИ
-                </h2>
-            </div>
-            
-            <div id="cases-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-                <!-- Dynamically rendered cases -->
-            </div>
+            <h2 class="text-xl font-orbitron font-extrabold text-white tracking-wide flex items-center gap-2 mb-6">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-neon animate-ping"></span> КОЛЛЕКЦИИ И КЕЙСЫ
+            </h2>
+            <div id="cases-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"></div>
         </section>
 
         <!-- INVENTORY SECTION -->
@@ -139,68 +147,56 @@
         <!-- MARKET SECTION (БИРЖА) -->
         <section id="sec-market" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Market Left: Live Chart Simulation -->
+                <!-- Market Orders Feed -->
                 <div class="lg:col-span-2 glass-panel p-6 rounded-2xl border border-brand-border">
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <h3 class="font-orbitron font-bold text-white text-lg">КУРС OSE / STANDOFF GOLD</h3>
-                            <p class="text-xs text-gray-400">Симуляция торгов в реальном времени</p>
-                        </div>
-                        <span id="stock-price" class="text-2xl font-orbitron font-extrabold text-brand-neon">1 OSE = 2.45 GOLD</span>
-                    </div>
-                    
-                    <div class="h-48 bg-brand-bg rounded-xl border border-brand-border p-4 flex items-end justify-between gap-1 relative overflow-hidden" id="stock-chart">
-                        <!-- Dynamic Stock Bars -->
-                    </div>
+                    <h3 class="font-orbitron font-bold text-white text-lg mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-store text-brand-neon"></i> ТОРГОВЫЙ СТАКАН (ОБМЕН МЕЖДУ ИГРОКАМИ)
+                    </h3>
+                    <div id="market-list" class="space-y-3"></div>
                 </div>
 
-                <!-- Market Right: Trade Panel -->
+                <!-- Market Stats -->
                 <div class="glass-panel p-6 rounded-2xl border border-brand-border flex flex-col justify-between">
                     <div>
-                        <h3 class="font-orbitron font-bold text-white mb-2">ОБМЕН И ТОРГОВЛЯ</h3>
-                        <p class="text-xs text-gray-400 mb-4">Продавайте скины по завышенному курсу на бирже или покупайте OSE акции.</p>
+                        <h3 class="font-orbitron font-bold text-white mb-2">КУРС АКЦИЙ OSE</h3>
+                        <p class="text-xs text-gray-400 mb-4">Текущая стоимость единицы OSE относительно Gold в Standoff 2</p>
                         
-                        <div class="space-y-3 mb-6">
-                            <div class="bg-brand-bg p-3 rounded-xl border border-brand-border flex justify-between items-center">
-                                <span class="text-xs text-gray-400">Текущий тренд</span>
-                                <span id="market-trend" class="text-xs font-bold font-orbitron text-brand-neon">⬆ РОСТ (+12.4%)</span>
-                            </div>
+                        <div class="bg-brand-bg p-4 rounded-xl border border-brand-border text-center mb-6">
+                            <span class="text-xs text-gray-400 block mb-1">ТЕКУЩИЙ КУРС</span>
+                            <span class="text-2xl font-orbitron font-black text-brand-neon">1 OSE = 2.85 GOLD</span>
                         </div>
                     </div>
 
-                    <button id="btn-market-boost" class="w-full py-3 bg-brand-neon text-black font-orbitron font-black rounded-xl hover:bg-green-400 transition neon-glow">
-                        СКУПИТЬ АКЦИИ OSE
+                    <button id="btn-market-buy-ose" class="w-full py-3 bg-brand-neon text-black font-orbitron font-black rounded-xl hover:bg-green-400 transition neon-glow">
+                        КУПИТЬ ПАКЕТ OSE (+500)
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- UPGRADER SECTION -->
-        <section id="sec-upgrader" class="tab-content hidden">
-            <div class="max-w-2xl mx-auto glass-panel p-8 rounded-2xl border border-brand-border text-center">
-                <h2 class="text-2xl font-orbitron font-bold text-white mb-2">НЕОНОВЫЙ АПГРЕЙДЕР</h2>
-                <p class="text-gray-400 text-sm mb-6">Попробуйте обменять свой дешёвый скин на легендарный нож</p>
+        <!-- CONTRACTS SECTION -->
+        <section id="sec-contracts" class="tab-content hidden">
+            <div class="max-w-3xl mx-auto glass-panel p-8 rounded-2xl border border-brand-border text-center">
+                <h2 class="text-2xl font-orbitron font-bold text-white mb-2">КОНТРАКТЫ ОБМЕНА</h2>
+                <p class="text-gray-400 text-sm mb-6">Выберите 10 предметов одного качества для создания 1 случайного предмета более высокой редкой категории.</p>
                 
-                <div class="border-2 border-dashed border-brand-neon/30 bg-brand-bg/50 p-10 rounded-2xl mb-6">
-                    <i class="fa-solid fa-bolt text-5xl text-brand-neon mb-3 animate-bounce"></i>
-                    <p class="text-sm text-gray-400">Выберите предмет из инвентаря для запускa апгрейда</p>
-                </div>
+                <div id="contract-slots" class="grid grid-cols-5 gap-3 mb-6"></div>
+
+                <button id="btn-exec-contract" class="px-8 py-3 bg-brand-purple text-white font-orbitron font-bold rounded-xl hover:bg-purple-600 transition">
+                    ПОДПИСАТЬ КОНТРАКТ
+                </button>
             </div>
         </section>
 
     </main>
 
-    <!-- MODAL: CASE OPENING ROULETTE -->
+    <!-- MODAL: CASE ROULETTE -->
     <div id="modal-case" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
         <div class="glass-panel border border-brand-border rounded-3xl p-8 max-w-xl w-full mx-4 text-center relative overflow-hidden">
-            <h3 id="modal-case-title" class="text-2xl font-orbitron font-black text-white mb-6 uppercase tracking-wider">КЕЙС</h3>
+            <h3 id="modal-case-title" class="text-2xl font-orbitron font-black text-white mb-6 uppercase">КЕЙС</h3>
             
-            <!-- Roulette Screen -->
             <div class="w-full h-36 bg-brand-bg border-2 border-brand-border rounded-2xl mb-8 relative overflow-hidden flex items-center justify-center">
-                <!-- Center Pointer Line -->
                 <div class="w-1 h-full bg-brand-neon absolute z-20 shadow-[0_0_15px_#00ff66]"></div>
-                
-                <!-- Item Text Display -->
                 <div id="roulette-target" class="text-2xl font-orbitron font-extrabold text-brand-neon px-6 text-center z-10">
                     ГОТОВ К ОТКРЫТИЮ
                 </div>
@@ -220,10 +216,8 @@
     <!-- MODAL: PROMOCODE -->
     <div id="modal-promo" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
         <div class="glass-panel border border-brand-border rounded-2xl p-6 max-w-sm w-full mx-4">
-            <h3 class="text-lg font-orbitron font-bold text-white mb-2">АКТИВАЦИЯ ПРОМОКОДА</h3>
-            <p class="text-xs text-gray-400 mb-4">Введите промокод для получения бесплатных OSE</p>
-            
-            <input type="text" id="promo-input" placeholder="OVER2026..." class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 font-orbitron text-white mb-4 focus:outline-none focus:border-brand-neon">
+            <h3 class="text-lg font-orbitron font-bold text-white mb-2">ПРОМОКОД</h3>
+            <input type="text" id="promo-input" placeholder="Введите промокод..." class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 font-orbitron text-white mb-4 focus:outline-none focus:border-brand-neon">
             
             <div class="flex gap-2">
                 <button id="btn-apply-promo" class="flex-1 py-2.5 bg-brand-neon text-black font-orbitron font-bold text-sm rounded-xl hover:bg-green-400 transition">
@@ -238,11 +232,31 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // State
+            // Auth & User Profile State
+            let username = localStorage.getItem('ose_username') || '';
             let balance = parseInt(localStorage.getItem('ose_balance')) || 1000;
             let inventory = JSON.parse(localStorage.getItem('ose_inventory')) || [];
             let activeCase = null;
             let isSpinning = false;
+
+            if (!username) {
+                document.getElementById('modal-auth').classList.remove('hidden');
+            } else {
+                document.getElementById('modal-auth').classList.add('hidden');
+                document.getElementById('user-display-name').innerText = username;
+            }
+
+            document.getElementById('btn-login').addEventListener('click', () => {
+                const input = document.getElementById('auth-username').value.trim();
+                if (input.length < 3) {
+                    alert('Никнейм должен быть не короче 3 символов');
+                    return;
+                }
+                username = input;
+                localStorage.setItem('ose_username', username);
+                document.getElementById('user-display-name').innerText = username;
+                document.getElementById('modal-auth').classList.add('hidden');
+            });
 
             const CASES = [
                 { id: 'origin', name: 'ORIGIN CASE', price: 100, icon: 'fa-box-open', color: 'text-brand-neon' },
@@ -255,11 +269,10 @@
                 { name: 'AKR "Treasure Hunter"', rarity: 'Arcane', price: 1200, color: 'text-brand-gold' },
                 { name: 'M4 "Grand Prix"', rarity: 'StatTrak', price: 450, color: 'text-brand-purple' },
                 { name: 'Karambit "Gold"', rarity: 'Knife', price: 3500, color: 'text-brand-neon' },
-                { name: 'AWM "Sport"', rarity: 'Epic', price: 250, color: 'text-blue-400' },
+                { name: 'AWM "Sport"', rarity: 'Epic', price: 250, color: 'text-brand-blue' },
                 { name: 'Glock "Nest"', rarity: 'Common', price: 30, color: 'text-gray-400' }
             ];
 
-            // Core UI
             function updateBalanceUI() {
                 document.getElementById('balance').innerText = balance.toLocaleString();
                 localStorage.setItem('ose_balance', balance);
@@ -268,7 +281,7 @@
             function renderCases() {
                 const container = document.getElementById('cases-grid');
                 container.innerHTML = CASES.map(c => `
-                    <div data-case-id="${c.id}" class="case-card glass-panel rounded-2xl p-5 cursor-pointer hover:border-brand-neon/60 transition duration-300 group flex flex-col items-center relative">
+                    <div data-case-id="${c.id}" class="case-card glass-panel rounded-2xl p-5 cursor-pointer hover:border-brand-neon/60 transition duration-300 group flex flex-col items-center">
                         <i class="fa-solid ${c.icon} ${c.color} text-6xl my-6 group-hover:scale-110 transition duration-300"></i>
                         <h3 class="font-orbitron font-bold text-white text-sm tracking-wider mb-2">${c.name}</h3>
                         <span class="text-xs font-orbitron font-bold text-brand-neon bg-brand-neon/10 px-3 py-1 rounded-full border border-brand-neon/30">
@@ -278,9 +291,7 @@
                 `).join('');
 
                 document.querySelectorAll('.case-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        openCaseModal(card.getAttribute('data-case-id'));
-                    });
+                    card.addEventListener('click', () => openCaseModal(card.getAttribute('data-case-id')));
                 });
             }
 
@@ -315,7 +326,40 @@
                 localStorage.setItem('ose_inventory', JSON.stringify(inventory));
             }
 
-            // Tab Switching
+            function renderMarket() {
+                const list = document.getElementById('market-list');
+                const sampleOffers = [
+                    { name: 'M4 "Grand Prix"', seller: 'ShadowSlayer', price: 420 },
+                    { name: 'AWM "Sport"', seller: 'ProGamer2026', price: 230 },
+                    { name: 'AKR "Treasure Hunter"', seller: 'GunsMaster', price: 1150 }
+                ];
+
+                list.innerHTML = sampleOffers.map(o => `
+                    <div class="bg-brand-bg p-3 rounded-xl border border-brand-border flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-white block">${o.name}</span>
+                            <span class="text-[10px] text-gray-400">Продавец: ${o.seller}</span>
+                        </div>
+                        <button class="px-3 py-1.5 bg-brand-neon/10 border border-brand-neon/30 text-brand-neon font-orbitron font-bold text-xs rounded-lg hover:bg-brand-neon hover:text-black transition">
+                            КУПИТЬ (${o.price} OSE)
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            function renderContracts() {
+                const slots = document.getElementById('contract-slots');
+                slots.innerHTML = '';
+                for(let i = 0; i < 10; i++) {
+                    slots.innerHTML += `
+                        <div class="h-20 border border-dashed border-brand-border rounded-xl flex items-center justify-center text-xs text-gray-600 font-orbitron">
+                            СЛОТ ${i+1}
+                        </div>
+                    `;
+                }
+            }
+
+            // Tab Navigation
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const tabId = btn.getAttribute('data-tab');
@@ -331,31 +375,23 @@
                 });
             });
 
-            // Case Opener Modal
+            // Case Logic
             function openCaseModal(caseId) {
                 activeCase = CASES.find(c => c.id === caseId);
                 if (!activeCase) return;
-                
                 document.getElementById('modal-case-title').innerText = activeCase.name;
                 document.getElementById('btn-spin').innerText = `ОТКРЫТЬ (${activeCase.price} OSE)`;
                 document.getElementById('roulette-target').innerText = 'ГОТОВ К ОТКРЫТИЮ';
                 document.getElementById('modal-case').classList.remove('hidden');
             }
 
-            function closeCaseModal() {
-                if (isSpinning) return;
-                document.getElementById('modal-case').classList.add('hidden');
-            }
-
-            document.getElementById('btn-close-case').addEventListener('click', closeCaseModal);
+            document.getElementById('btn-close-case').addEventListener('click', () => {
+                if (!isSpinning) document.getElementById('modal-case').classList.add('hidden');
+            });
 
             document.getElementById('btn-spin').addEventListener('click', () => {
-                if (isSpinning) return;
-                if (!activeCase || balance < activeCase.price) {
-                    alert('Недостаточно OSE средств!');
-                    return;
-                }
-
+                if (isSpinning || !activeCase || balance < activeCase.price) return;
+                
                 balance -= activeCase.price;
                 updateBalanceUI();
                 isSpinning = true;
@@ -368,7 +404,7 @@
                     rouletteEl.innerText = tempItem.name;
                     counter++;
 
-                    if (counter > 20) {
+                    if (counter > 18) {
                         clearInterval(interval);
                         const winItem = ITEMS[Math.floor(Math.random() * ITEMS.length)];
                         rouletteEl.innerText = winItem.name;
@@ -379,7 +415,6 @@
                 }, 80);
             });
 
-            // Inventory Actions
             function sellItem(idx) {
                 if (idx < 0 || idx >= inventory.length) return;
                 balance += inventory[idx].price;
@@ -390,61 +425,39 @@
 
             document.getElementById('btn-sell-all').addEventListener('click', () => {
                 if (inventory.length === 0) return;
-                const total = inventory.reduce((acc, item) => acc + item.price, 0);
-                balance += total;
+                balance += inventory.reduce((acc, item) => acc + item.price, 0);
                 inventory = [];
                 updateBalanceUI();
                 renderInventory();
             });
 
-            // Promo Modals
-            document.getElementById('btn-promo-open').addEventListener('click', () => {
-                document.getElementById('modal-promo').classList.remove('hidden');
-            });
-
-            document.getElementById('btn-close-promo').addEventListener('click', () => {
-                document.getElementById('modal-promo').classList.add('hidden');
-            });
-
+            // Promos
+            document.getElementById('btn-promo-open').addEventListener('click', () => document.getElementById('modal-promo').classList.remove('hidden'));
+            document.getElementById('btn-close-promo').addEventListener('click', () => document.getElementById('modal-promo').classList.add('hidden'));
             document.getElementById('btn-apply-promo').addEventListener('click', () => {
                 const code = document.getElementById('promo-input').value.trim().toUpperCase();
-                if (code === 'OVER2026' || code === 'STANDOFF' || code === 'KERAMBIT') {
+                if (code === 'OVER2026' || code === 'STANDOFF') {
                     balance += 500;
                     updateBalanceUI();
                     alert('Промокод активирован! +500 OSE');
-                    document.getElementById('promo-input').value = '';
                     document.getElementById('modal-promo').classList.add('hidden');
                 } else {
                     alert('Неверный промокод');
                 }
             });
 
-            // Stock Chart Simulation (Биржа)
-            function initStockChart() {
-                const chartContainer = document.getElementById('stock-chart');
-                chartContainer.innerHTML = '';
-                for(let i = 0; i < 24; i++) {
-                    const height = Math.floor(Math.random() * 70) + 20;
-                    const isGreen = Math.random() > 0.4;
-                    const bar = document.createElement('div');
-                    bar.className = `flex-1 rounded-t ${isGreen ? 'bg-brand-neon' : 'bg-brand-red'} transition-all duration-500`;
-                    bar.style.height = `${height}%`;
-                    chartContainer.appendChild(bar);
-                }
-            }
-
-            document.getElementById('btn-market-boost').addEventListener('click', () => {
-                balance += 100;
+            document.getElementById('btn-market-buy-ose').addEventListener('click', () => {
+                balance += 500;
                 updateBalanceUI();
-                initStockChart();
-                alert('Вы купили OSE акции! +100 OSE дивидендов');
+                alert('Куплено +500 OSE');
             });
 
             // Init
             updateBalanceUI();
             renderCases();
             renderInventory();
-            initStockChart();
+            renderMarket();
+            renderContracts();
         });
     </script>
 </body>
